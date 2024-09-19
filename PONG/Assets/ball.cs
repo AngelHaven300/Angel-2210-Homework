@@ -12,7 +12,10 @@ public class ball : MonoBehaviour
     void Start()
     {
         r2d = GetComponent<Rigidbody2D>();
-       ResetBall();
+        r2d.velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        r2d.velocity.Normalize();
+        r2d.velocity = r2d.velocity * Speed;
+        LocalVelocity = r2d.velocity;
     }
 
     // Update is called once per frame
@@ -24,21 +27,29 @@ public class ball : MonoBehaviour
     {
         Debug.Log("Collision!");
         LocalVelocity = Vector2.Reflect(LocalVelocity, collision.GetContact(0).normal);
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Hit Trigger");
         transform.position = new Vector3(0.03f, -0.02f, 6.253493f);
+        r2d.velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        r2d.velocity.Normalize();
+        r2d.velocity = r2d.velocity * Speed;
+        LocalVelocity = r2d.velocity;
+        bool IsLeft = (collision.gameObject.name == "LeftGoal");
+        GameObject.FindObjectOfType<GameManager>().IncrementScore(IsLeft);
+
         
-        ResetBall();
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
         
     }
-    private void ResetBall()
+    public void ResetBall()
     {
+        gameObject.SetActive(true);
         transform.position = new Vector3(0.03f, -0.02f, 6.253493f);
         r2d.velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         r2d.velocity.Normalize();
