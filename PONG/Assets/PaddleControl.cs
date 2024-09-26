@@ -20,7 +20,22 @@ public class PaddleControl : MonoBehaviour
         Vector2 vel = new Vector2(0.0f, direction);
         vel = vel * speed;
 
-        r2d.velocity = vel; 
+        r2d.velocity = vel;
+
+        if (Input.GetButton("Obutton")) 
+        {
+            Debug.Log("O Press");
+            speed = 10.0f;
+            
+        }
+        else
+        {
+
+
+            speed = 4.0f;
+            
+        }
+
 
 
         //transform.Translate(new Vector3(0.0f, direction, 0.0f));

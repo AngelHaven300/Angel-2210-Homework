@@ -22,6 +22,20 @@ public class Player2Paddle : MonoBehaviour
 
         r2d.velocity = vel;
 
+        if (Input.GetButton("Qbutton"))
+        {
+            Debug.Log("Q Press");
+            speed = 10.0f;
+
+        }
+        else
+        {
+
+
+            speed = 4.0f;
+
+        }
+
         //transform.Translate(new Vector3(0.0f, direction, 0.0f));
     }
 }
