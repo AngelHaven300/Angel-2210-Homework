@@ -7,10 +7,14 @@ public class PlayerMover : MonoBehaviour
     public float Speed;
     public float RotationSpeed;
     private Rigidbody2D MyRigidbody2D;
+    public GameObject BulletPrefab; 
+
+    public List<bullet> Bullets = new List<bullet>();
     // Start is called before the first frame update
     void Start()
     {
-        MyRigidbody2D = GetComponent<Rigidbody2D>(); 
+        MyRigidbody2D = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
@@ -24,6 +28,26 @@ public class PlayerMover : MonoBehaviour
         {
             Debug.Log("Vector is : " + (transform.forward * (Speed * Input.GetAxis("Vertical"))));
             MyRigidbody2D.AddForce(transform.up * (Speed * Input.GetAxis("Vertical")));
+        }
+
+        if(Input.GetButtonDown("Fire1"))
+        {
+            GameObject myBullet = GameObject.Instantiate(BulletPrefab, transform.position, transform.rotation);
+            Bullets.Add(myBullet.GetComponent<bullet>());
+        }
+
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            //Destroy(Bullets[0]);
+           // Destroy(Bullets[1]);
+           foreach(bullet singleBullet in Bullets)
+            {
+                if (singleBullet != null)
+                {
+                    Destroy(singleBullet.gameObject);
+                }
+            }
+            Bullets.Clear();
         }
         
     }
